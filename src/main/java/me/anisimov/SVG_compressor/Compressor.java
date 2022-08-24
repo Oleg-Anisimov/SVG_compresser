@@ -1,3 +1,5 @@
+package me.anisimov.SVG_compressor;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -23,7 +25,7 @@ class Compressor {
                 System.out.println("No such file: \"{args[0]}\"");
                 return 2;
             }
-            String newFilePath = FilenameUtils.getFullPath(pathFile)+"\\"+"Compressed .SVG";
+            String newFilePath = FilenameUtils.getFullPath(pathFile)+"\\"+FilenameUtils.getBaseName(pathFile) + "_compressed.SVG";
 
             String match = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             String newFileText = match.replaceAll("(\\d+\\.\\d)(?:\\d+)", "$1");

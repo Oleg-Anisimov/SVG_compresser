@@ -1,3 +1,5 @@
+package me.anisimov.SVG_compressor;
+
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.DnDConstants;
@@ -14,7 +16,7 @@ public class FileChooser extends JFrame {
     private JFileChooser fileChooser = null;
 
     public FileChooser() {
-        super("FileChooser");
+        super("SVG_compressor.FileChooser");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         btnOpenDir = new JButton("Открыть директорию");
