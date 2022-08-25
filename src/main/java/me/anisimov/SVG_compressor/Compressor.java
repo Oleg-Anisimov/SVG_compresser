@@ -10,11 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 class Compressor {
-    public static int compress(String... args) throws IOException {
+    public static String compress(String... args) throws IOException {
+
+        String str="";
 
         if (args.length < 1 || isNullOrWhitespace(args[0])) {
             System.out.println("Run app with argument: path to svg");
-            return 1;
+
         }
 
 
@@ -23,9 +25,9 @@ class Compressor {
             File file = new File(pathFile);
             if (!file.exists()) {
                 System.out.println("No such file: \"{args[0]}\"");
-                return 2;
+
             }
-            String newFilePath = FilenameUtils.getFullPath(pathFile)+"\\"+FilenameUtils.getBaseName(pathFile) + "_compressed.SVG";
+            String newFilePath = FilenameUtils.getFullPath(pathFile) + "\\" + FilenameUtils.getBaseName(pathFile) + "_compressed.SVG";
 
             String match = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             String newFileText = match.replaceAll("(\\d+\\.\\d)(?:\\d+)", "$1");
@@ -37,10 +39,12 @@ class Compressor {
             }
 
             Files.write(Path.of(newFilePath), newFileText.getBytes(StandardCharsets.UTF_8));
-
+            float i = (match.getBytes(StandardCharsets.UTF_8).length - newFileText.getBytes(StandardCharsets.UTF_8).length)/1000;
+            str="Saved " + i + " Kb";
         }
+
         System.out.println("Done!");
-        return 0;
+        return str;
     }
 
     public static boolean isNullOrWhitespace(String s) {

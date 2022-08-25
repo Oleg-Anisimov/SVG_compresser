@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
+@SuppressWarnings("uncheked")
 public class FileChooser extends JFrame {
     private JButton btnOpenDir = null;
     private JFileChooser fileChooser = null;
@@ -25,11 +25,21 @@ public class FileChooser extends JFrame {
 
 
         JPanel contents = new JPanel();
-        JTextArea myPanel = new JTextArea(10,50);
+        JTextArea myPanel = new JTextArea(10,40);
+        myPanel.setEditable(false);
+
+        JScrollPane sp = new JScrollPane(myPanel);
+
+//        myPanel.setAutoscrolls(true);
+
+
+
+        contents.add(sp);
 
         contents.add(btnOpenDir);
 
-        contents.add(myPanel);
+        sp.setVisible(true);
+
         setContentPane(contents);
 
         setSize(500, 300);
@@ -46,7 +56,8 @@ public class FileChooser extends JFrame {
                 // Если директория выбрана, покажем ее в сообщении
                 if (result == JFileChooser.APPROVE_OPTION){
                     try {
-                        Compressor.compress(file.getAbsolutePath());
+                        String str = Compressor.compress(file.getAbsolutePath());
+                        myPanel.append(file.getName() + "\t"+ str + "\n" );
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(FileChooser.this,
                                 fileChooser.getSelectedFile());
@@ -66,7 +77,10 @@ public class FileChooser extends JFrame {
                             evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
                     for (File file : droppedFiles) {
                         try {
-                            Compressor.compress(file.getAbsolutePath());
+                            String str = Compressor.compress(file.getAbsolutePath());
+                            myPanel.append(file.getName() + "\t"+ str + "\n" );
+
+
                         } catch (IOException ex) {
                             JOptionPane.showMessageDialog(FileChooser.this,
                                     fileChooser.getSelectedFile());
